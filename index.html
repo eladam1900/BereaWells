@@ -50,20 +50,18 @@
         padding: 7px;
         right: 90px;
         bottom: 25px;
-        width:18%;
-        height: 19%;
         font-family: sans-serif;
     }
     #legnd label,
     #legend span {
-  display:block;
-  float:left;
-  height:15px;
-  width:20%;
-  text-align:center;
-  font-size:9px;
-  color:#808080;
-  }
+      display:block;
+      float:left;
+      height:15px;
+      width:20%;
+      text-align:center;
+      font-size:9px;
+      color:#808080;
+      }
 </style>
 </head>
 <body>
@@ -72,36 +70,38 @@
     <div id="sidepanel">
         <p>Over the past several years there has been a drilling boom in Northeastern Kentucky. Most of these wells have been drilled into the Berea Sandstone which produces oil and gas. Nationally there has also been a rise in concerns over the drilling practice known as fracking, and it's effects on the environment. More specifically the public has been concerned with induced seismicity (earthquakes caused by human events) and groundwater contamination.<br><br>This map is designed to give users access to the various well documents and analysis reports for both the water and the oil and gas wells.</p></div>
 <div id="legend">
-    <strong>Water Wells</strong>
-    <nav class='legend clearfix' >
-    <span style='background:#7fcdbb;'></span>
-    <span style='background:#41b6c4;'></span>
-    <span style='background:#1d91c0;'></span>
-    <span style='background:#225ea8;'></span>
-    <span style='background:#0c2c84;'></span>
-    <label>0 - 500</label>
-    <label>-1000</label>
-    <label>-1500</label>
-    <label>-2000</label>
-    <label>-2500+</label>
-        <br><br>
-    <strong>Oil and Gas Wells</strong>    
-    <nav class='legend clearfix' >
-    <span style='background:#9e9ac8;'></span>
-    <span style='background:#807dba;'></span>
-    <span style='background:#6a51a3;'></span>
-    <span style='background:#54278f;'></span>
-    <span style='background:#3f007d;'></span>
-    <label>0 - 500</label>
-    <label>-1000</label>
-    <label>-1500</label>
-    <label>-2000</label>
-    <label>-2500+</label>    
+    <strong>Water Well Depth</strong>
+    <div class='legend clearfix'>
+        <span style='background:#7fcdbb;'></span>
+        <span style='background:#41b6c4;'></span>
+        <span style='background:#1d91c0;'></span>
+        <span style='background:#225ea8;'></span>
+        <span style='background:#0c2c84;'></span>
+        <label>0 - 500</label>
+        <label>-1000</label>
+        <label>-1500</label>
+        <label>-2000</label>
+        <label>-2500+</label>
+    </div>
+    <hr>
+    <strong>Oil and Gas Well Depth</strong>    
+    <div class='legend clearfix' >
+        <span style='background:#9e9ac8;'></span>
+        <span style='background:#807dba;'></span>
+        <span style='background:#6a51a3;'></span>
+        <span style='background:#54278f;'></span>
+        <span style='background:#3f007d;'></span>
+        <label>0 - 500</label>
+        <label>-1000</label>
+        <label>-1500</label>
+        <label>-2000</label>
+        <label>-2500+</label>    
     </div> 
     
 <script>
 
 L.mapbox.accessToken = 'pk.eyJ1IjoiZWxhZGFtMTkwMCIsImEiOiJjaW50MXFnZG4xMWZjdWttM2Nucmduc3E3In0.2v3TohBE2ysztKSUSjhHpg';
+
 var map = L.mapbox.map('map', 'mapbox.outdoors',{
                    center:[38.2, -83.2],
                    zoom: 9,
@@ -109,13 +109,16 @@ var map = L.mapbox.map('map', 'mapbox.outdoors',{
                    maxZoom: 17
             });
     
+var ww, og; // globals for layers
+    
 var customLayer = L.geoJson(null, {
     fillOpacity: 0,
     color: '#ada8a2',
     weight: 3,
     stroke: 1
-})    
-omnivore.topojson('ky-counties-topo.json', null, customLayer).addTo(map);
+});
+    
+var counties = omnivore.topojson('ky-counties-topo.json', null, customLayer);
     
 omnivore.csv('BereaWells_John_Green_Law_Cleaned.csv')
     .on('ready', function(ogWells){
@@ -135,10 +138,11 @@ omnivore.csv('BereaWells_John_Green_Law_Cleaned.csv')
     });
     
 function drawMap(ogWells, waterWells) {
-    //console.log(ogWells)
-     //console.log(waterWells)
-    //var breaks = ogMarker(ogWells);
-    //var cuts = waterMarker(waterWells);
+    
+    var ogBreaks = getBreaks(ogWells);
+    var wwBreaks = getBreaks(waterWells);
+    
+    // counties.addTo(map);
     
   ww  = L.geoJson(waterWells, {
        
@@ -146,30 +150,21 @@ function drawMap(ogWells, waterWells) {
             return L.circleMarker(layer, {
                 color: '#d3d3d3',
                 fillColor: '#2f5997',  
-                //fillColor: waterMarker(feature.properties.Total_Depth, cuts),
+                fillColor: waterMarker(feature.properties.total_depth, wwBreaks),
                 stroke: 0.5,
                 opacity: 1,
                 fillOpacity: 1,
                 radius: 4
             });
-        },
+        }, // end pointToLayer
         
     onEachFeature: function(feature, layer){
-        if(feature.properties.Total_Depth <= 500){
-            return layer.setStyle ({fillColor:'#7fcdbb'})
-    }else if (feature.properties.Total_Depth > 500 && feature.properties.Total_Depth <= 1000){
-      return layer.setStyle ({fillColor: '#41b6c4'})
-  }else if (feature.properties.Total_Depth > 1000 && feature.properties.Total_Depth <= 1500){
-      return layer.setStyle ({fillColor: '#1d91c0'})
-  }else if (feature.properties.Total_Depth > 1500 && feature.properties.Total_Depth <= 2000){
-      return layer.setStyle ({fillColor: '#225ea8'})
-  }else if (feature.properties.Total_Depth > 2000){
-      return layer.setStyle ({fillColor: '#0c2c84'})
-  }
-                             
-        }    
         
-    }).bindPopup("hey").addTo(map);    
+        var content = 'popup content';
+        
+        layer.bindPopup(content);
+    }
+}).addTo(map);    
     
   og = L.geoJson(ogWells, {
       
@@ -177,51 +172,38 @@ function drawMap(ogWells, waterWells) {
         return L.circleMarker(layer,{
             color: '#d3d3d3',
             fillColor: '#956bb2', 
-            //fillColor: ogMarker(feature.properties.total_depth, breaks),
+            fillColor: ogMarker(feature.properties.total_depth, ogBreaks),
             stroke: 0.5,
             opacity: 1,
             fillOpacity: 1,
             radius: 4
-        });   
-        
-    var content  = "<b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"    
-        
-   layer.bindPopup(content);   
+        });    
         
     },
-      
     onEachFeature: function(feature, layer){
-        if(feature.properties.total_depth <= 500){
-            return layer.setStyle ({fillColor:'#9e9ac8'})
-    }else if (feature.properties.total_depth > 500 && feature.properties.total_depth <= 1000){
-      return layer.setStyle ({fillColor: '#807dba'})
-  }else if (feature.properties.total_depth > 1000 && feature.properties.total_depth <= 1500){
-      return layer.setStyle ({fillColor: '#6a51a3'})
-  }else if (feature.properties.total_depth > 1500 && feature.properties.total_depth <= 2000){
-      return layer.setStyle ({fillColor: '#54278f'})
-  }else if (feature.properties.total_depth > 2000){
-      return layer.setStyle ({fillColor: '#3f007d'})
-  }
-                             
-} 
-     
-}).bindPopup("hello")
-  .addTo(map);
-    
-   RadiusCircle(); 
-   Popups();
-}    
-    
-/*function ogMarker (ogWells){
-    
-    var values=[];
-    
-    ogWells.eachLayer(function(layer){
-        var value = feature.properties.total_depth
-        values.push(value);
         
-    });
+        var content  = "<b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"    
+        
+        layer.bindPopup(content);  
+        
+        
+
+    } 
+     
+  }).addTo(map);
     
+    
+  radiusCircle(); 
+
+}    // end drawMap()
+    
+function getBreaks(wellData) {
+
+     var values=[];
+    wellData.features.forEach(function(feature) {
+        var value = Number(feature.properties.total_depth);
+        values.push(value);
+    })
     var clusters = ss.ckmeans(values, 5);
         
     var breaks = clusters.map(function(cluster){
@@ -229,6 +211,11 @@ function drawMap(ogWells, waterWells) {
     });
     
     return breaks;
+     
+}
+    
+function ogMarker(d, breaks){
+    
     
     if(d <= breaks[0][1]){
         return '#f2f0f7'
@@ -243,21 +230,9 @@ function drawMap(ogWells, waterWells) {
     }
         
 }
-    
-function waterMarker (waterWells){
-    
-    waterWells.eachLayer(function(layer){
-        var value = feature.properties.Total_Depth
-        values.push(value);   
-    });
-    
-    var clusters = ss.ckmeans(values, 5);
-        
-    var breaks = clusters.map(function(cluster){
-        return [cluster[0],cluster.pop()];
-    });
-    
-    return breaks;
+
+function waterMarker(d, breaks){
+
     
     if(d <= breaks[0][1]){
         return '#F1EEF6'
@@ -271,23 +246,18 @@ function waterMarker (waterWells){
         return '#045A8D'
     }
         
-}*/        
+}       
     
-/*function Popups () {
-    
-    map.on('click' function(e){
-    var content  = "<b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"
 
-    })
-      layer.bindPopup(content)
-} */  
     
-function RadiusCircle (){
+function radiusCircle (){
     //create set radius around a well on click
     map.on('click', function(e){
-        console.log(e)
+       
         og.eachLayer(function(layer) {
-            var distance = e.latlng.distanceTo(layer.getlatlng())/1000;
+            var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
+            
+            console.log(distance)
             
             if (distance > 4) {
                     layer.setStyle({
