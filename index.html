@@ -169,7 +169,7 @@ function drawMap(ogWells, waterWells) {
                              
         }    
         
-    }).addTo(map);    
+    }).bindPopup("hey").addTo(map);    
     
   og = L.geoJson(ogWells, {
       
@@ -186,7 +186,7 @@ function drawMap(ogWells, waterWells) {
         
     var content  = "<b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"    
         
-    circleMarker.bindPopup(content).addTo(map);   
+   layer.bindPopup(content);   
         
     },
       
@@ -205,7 +205,8 @@ function drawMap(ogWells, waterWells) {
                              
 } 
      
-}).addTo(map);
+}).bindPopup("hello")
+  .addTo(map);
     
    RadiusCircle(); 
    Popups();
@@ -272,14 +273,14 @@ function waterMarker (waterWells){
         
 }*/        
     
-function Popups () {
+/*function Popups () {
     
     map.on('click' function(e){
     var content  = "<b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"
 
     })
       layer.bindPopup(content)
-}   
+} */  
     
 function RadiusCircle (){
     //create set radius around a well on click
