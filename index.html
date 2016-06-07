@@ -118,7 +118,7 @@ var customLayer = L.geoJson(null, {
     stroke: 1
 });
     
-var counties = omnivore.topojson('ky-counties-topo.json', null, customLayer);
+var counties = omnivore.topojson('ky-counties-topo.json', null, customLayer).addTo(map);
     
 omnivore.csv('BereaWells_John_Green_Law_Cleaned.csv')
     .on('ready', function(ogWells){
@@ -160,7 +160,10 @@ function drawMap(ogWells, waterWells) {
         
     onEachFeature: function(feature, layer){
         
-        var content = 'popup content';
+        var content  = "<b>"+"AKGWA Number: "+"</b>"+feature.properties.AKGWA_NUMBER+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.County+"<br>"+"<b>"+"Primary Use: "+"</b>"+feature.properties.Primary_Use+"<br>"+"<b>"+"Construction Date: "+"</b>"+feature.properties.Construction_Date+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.Surface_Elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"  
+        
+        content += "<div><a href='http://kgs.uky.edu/kgsweb/DataSearching/Water/wellinfo.asp?id="+feature.properties.AKGWA_NUMBER+"' target='_blank'><u>Well Documents</u></a></div></div>"
+       /* "<div><a href='http://kgs.uky.edu/kgsweb/datasearching/oilgas/ogresults.asp?recno="+attrArray[i.substr(0,cutamt)+"record_number"]+"&areatype=recno' target='_blank'><u style='font-family:Veranda,sans-serif; font-size:13px; font-weight:bold;'>Well Documents</u></a></div></div>"*/
         
         layer.bindPopup(content);
     }
@@ -182,7 +185,9 @@ function drawMap(ogWells, waterWells) {
     },
     onEachFeature: function(feature, layer){
         
-        var content  = "<b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"    
+        var content  = "<b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"+"<b>"+"Completion Date: "+"</b>"+feature.properties.date_completed+"<br>"+"<b>"+"Well Type: "+"</b>"+feature.properties.original_result+"<br>"+"<b>"+"Deepest Producing Formation: "+"</b>"+feature.properties.deepest_pay+"<br>"       
+        
+        content += "<div><a href='http://kgs.uky.edu/kgsweb/datasearching/oilgas/ogresults.asp?recno="+feature.properties.record_number+"&areatype=recno' target='_blank'><u>Well Documents</u></a></div></div>"
         
         layer.bindPopup(content);  
         
@@ -218,15 +223,15 @@ function ogMarker(d, breaks){
     
     
     if(d <= breaks[0][1]){
-        return '#f2f0f7'
-    }else if (d <= breaks [1][1]){
-        return '#cbc9e2'
-    }else if (d <= breaks [2][1]){
         return '#9e9ac8'
+    }else if (d <= breaks [1][1]){
+        return '#807dba'
+    }else if (d <= breaks [2][1]){
+        return '#6a51a3'
     }else if (d <= breaks[3][1]){
-        return '#756bb1'
-    }else if (d <= breaks[4][1]){
         return '#54278f'
+    }else if (d <= breaks[4][1]){
+        return '#3f007d'
     }
         
 }
@@ -235,15 +240,15 @@ function waterMarker(d, breaks){
 
     
     if(d <= breaks[0][1]){
-        return '#F1EEF6'
+        return '#7fcdbb'
     }else if (d <= breaks [1][1]){
-        return '#BDC9E1'
+        return '#41b6c4'
     }else if (d <= breaks [2][1]){
-        return '#74A9CF'
+        return '#1d91c0'
     }else if (d <= breaks[3][1]){
-        return '#2B8CBE'
+        return '#225ea8'
     }else if (d <= breaks[4][1]){
-        return '#045A8D'
+        return '#0c2c84'
     }
         
 }       
@@ -259,7 +264,7 @@ function radiusCircle (){
             
             console.log(distance)
             
-            if (distance > 4) {
+            if (distance > 1) {
                     layer.setStyle({
                         stroke: false,
                         fill:false
