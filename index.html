@@ -142,14 +142,11 @@ function drawMap(ogWells, waterWells) {
     var ogBreaks = getBreaks(ogWells);
     var wwBreaks = getBreaks(waterWells);
     
-    // counties.addTo(map);
-    
   ww  = L.geoJson(waterWells, {
        
     pointToLayer: function(feature, layer){
             return L.circleMarker(layer, {
-                color: '#d3d3d3',
-                fillColor: '#2f5997',  
+                color: '#d3d3d3',  
                 fillColor: waterMarker(feature.properties.total_depth, wwBreaks),
                 stroke: 0.5,
                 opacity: 1,
@@ -163,7 +160,6 @@ function drawMap(ogWells, waterWells) {
         var content  = "<b>"+"AKGWA Number: "+"</b>"+feature.properties.AKGWA_NUMBER+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.County+"<br>"+"<b>"+"Primary Use: "+"</b>"+feature.properties.Primary_Use+"<br>"+"<b>"+"Construction Date: "+"</b>"+feature.properties.Construction_Date+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.Surface_Elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"  
         
         content += "<div><a href='http://kgs.uky.edu/kgsweb/DataSearching/Water/wellinfo.asp?id="+feature.properties.AKGWA_NUMBER+"' target='_blank'><u>Well Documents</u></a></div></div>"
-       /* "<div><a href='http://kgs.uky.edu/kgsweb/datasearching/oilgas/ogresults.asp?recno="+attrArray[i.substr(0,cutamt)+"record_number"]+"&areatype=recno' target='_blank'><u style='font-family:Veranda,sans-serif; font-size:13px; font-weight:bold;'>Well Documents</u></a></div></div>"*/
         
         layer.bindPopup(content);
     }
@@ -173,8 +169,7 @@ function drawMap(ogWells, waterWells) {
       
     pointToLayer: function(feature, layer){
         return L.circleMarker(layer,{
-            color: '#d3d3d3',
-            fillColor: '#956bb2', 
+            color: '#d3d3d3', 
             fillColor: ogMarker(feature.properties.total_depth, ogBreaks),
             stroke: 0.5,
             opacity: 1,
