@@ -64,9 +64,13 @@
       }
     .popup{
       color:'black';
-      font-family: cursive;
+      font-family: sans-serif;
       font-size:12px;
-      line-height:14px;
+      line-height:18px;
+        text-transform: lowercase;
+    }
+    .popup b{
+        font-size: 14px;
     }
 </style>
 </head>
@@ -167,7 +171,14 @@ function drawMap(ogWells, waterWells) {
         
         content += "<div><a href='http://kgs.uky.edu/kgsweb/DataSearching/Water/wellinfo.asp?id="+feature.properties.AKGWA_NUMBER+"' target='_blank'><u>Well Documents</u></a></div></div>"
         
-        layer.bindPopup(content);
+        layer.on('mouseover mousemove', function(e){
+    var popup = new L.popup({ offset: new L.Point(0,-10), closeButton: true, autoPan: false })
+      .setContent(content)
+      .setLatLng(e.latlng)
+      .openOn(map);
+  });
+  layer.on('mouseout', function(e){ map.closePopup() });
+        
     }
 }).addTo(map);    
     
@@ -190,9 +201,35 @@ function drawMap(ogWells, waterWells) {
         
         content += "<div><a href='http://kgs.uky.edu/kgsweb/datasearching/oilgas/ogresults.asp?recno="+feature.properties.record_number+"&areatype=recno' target='_blank'><u>Well Documents</u></a></div></div>"
         
-        layer.bindPopup(content);  
+        layer.on('mouseover mousemove', function(e){    
+            var popup = new L.popup({ offset: new L.Point(0,-10), closeButton: true, autoPan: false })
+                  .setContent(content)
+                  .setLatLng(e.latlng)
+                  .openOn(map);
+              });
         
+        layer.on('mouseout', function(e){ map.closePopup() });
         
+  /*      layer.on('click', function(e){
+       
+        og.eachLayer(function(layer) {
+            var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
+            
+            console.log(layer)
+            
+            if (distance > 1) {
+                    layer.setStyle({
+                        stroke: false,
+                        fill:false
+                    });
+            } else{
+                layer.setStyle({
+                    stroke: true,
+                    fill: true 
+                    });
+                  }
+            });
+        });*/
 
     } 
      
@@ -260,8 +297,9 @@ function radiusCircle (){
     //create set radius around a well on click
     map.on('click', function(e){
        
-        og.eachLayer(function(layer) {
-            var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
+       // og.eachLayer(function(layer) {
+           
+        var ogDistance = e.latlng.distanceTo(og.eachlayer.getLatLng())/1000;
             
             console.log(distance)
             
@@ -276,7 +314,23 @@ function radiusCircle (){
                     fill: true 
                 });
             }
-        });
+        
+        var wwDistance = e.latlng.distanceTo(ww.eachlayer.getLatLng())/1000;
+            
+            console.log(distance)
+            
+            if (distance > 1) {
+                    layer.setStyle({
+                        stroke: false,
+                        fill:false
+                    });
+            } else{
+                layer.setStyle({
+                    stroke: true,
+                    fill: true 
+                });
+            }
+       // });
     });
 }    
 </script>
