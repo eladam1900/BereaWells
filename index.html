@@ -47,9 +47,10 @@
     #legend{
         position: absolute;
         border: solid 1px black;
+        background-color: beige;
         padding: 7px;
-        right: 90px;
-        bottom: 25px;
+        left: 7px;
+        bottom: 7px;
         font-family: sans-serif;
     }
     #legnd label,
@@ -76,24 +77,8 @@
 </head>
 <body>
 <h1>Berea Wells and Surrounding Analized Water Wells</h1>
-<div class='popup' id='map'></div>
-    <div id="sidepanel">
-        <p>Over the past several years there has been a drilling boom in Northeastern Kentucky. Most of these wells have been drilled into the Berea Sandstone which produces oil and gas. 
-Nationally there has also been a rise in concerns over the drilling practice known as fracking, and it's effects on the environment. More specifically the public has been concerned 
-with induced seismicity (earthquakes caused by human events) and groundwater contamination.<br>
-<br>
-The Kentucky Geological Survey is currently in various stages of research studying the Berea at direct and indirect levels. These studies are being performed by staff in the Energy and Minerals Section and the Water Section, but 
-their findings will take up to a year or more to be published, but in the meantime here is a map designed to give users access to the various well documents and analysis reports for both the water and the oil and gas wells.
-<br>
-<br>
-1. Over 100 horizontal wells have been completed as oil wells in the Berea in Greenup (~39), Carter (1), Lawrence (~71), Johnson (~10), and Martin (1) Counties.
-2. These wells accounted for about 58% of oil production in Kentucky in 2015. Per well production ranges from 100s to 1,000s barrels per month.
-3. Measured vertical depths range from about 1,000 to 2,000 ft.
-4. The wells are fracked over multiple stages using 1,000s of barrels of fluid (1 barrel= 42 gallons) and 100,000s lbs. of sand. Note that the volumes of fluids and sand used in the Berea completions is less than in other unconventional plays, such as the Marcellus, Barnett, or Bakken.
-
-<br><br>This map is designed to give users access to the various well documents and analysis reports 
-for both the water and the oil and gas wells.</p></div>
-<div id="legend">
+<div class='popup' id='map'>
+    <div id="legend">
     <strong>Water Well Depth</strong>
     <div class='legend clearfix'>
         <span style='background:#7fcdbb;'></span>
@@ -121,7 +106,52 @@ for both the water and the oil and gas wells.</p></div>
         <label>-2000</label>
         <label>-2500+</label>    
     </div> 
-    
+</div></div>
+    <div id="sidepanel">
+        <p>Over the past several years there has been a drilling boom in Northeastern Kentucky. Most of these wells have been drilled into the Berea Sandstone which produces oil and gas. 
+Nationally there has also been a rise in concerns over the drilling practice known as fracking, and it's effects on the environment. More specifically the public has been concerned 
+with induced seismicity (earthquakes caused by human events) and groundwater contamination.<br>
+<br>
+The Kentucky Geological Survey is currently in various stages of research studying the Berea at direct and indirect levels. These studies are being performed by staff in the Energy and Minerals Section and the Water Section, but 
+their findings will take up to a year or more to be published, but in the meantime here is a map designed to give users access to the various well documents and analysis reports for both the water and the oil and gas wells.
+<br>
+<br>
+1. Over 100 horizontal wells have been completed as oil wells in the Berea in Greenup (~39), Carter (1), Lawrence (~71), Johnson (~10), and Martin (1) Counties.
+2. These wells accounted for about 58% of oil production in Kentucky in 2015. Per well production ranges from 100s to 1,000s barrels per month.
+3. Measured vertical depths range from about 1,000 to 2,000 ft.
+4. The wells are fracked over multiple stages using 1,000s of barrels of fluid (1 barrel= 42 gallons) and 100,000s lbs. of sand. Note that the volumes of fluids and sand used in the Berea completions is less than in other unconventional plays, such as the Marcellus, Barnett, or Bakken.
+
+<br><br>This map is designed to give users access to the various well documents and analysis reports 
+for both the water and the oil and gas wells.</p></div>
+<!--<div id="legend">
+    <strong>Water Well Depth</strong>
+    <div class='legend clearfix'>
+        <span style='background:#7fcdbb;'></span>
+        <span style='background:#41b6c4;'></span>
+        <span style='background:#1d91c0;'></span>
+        <span style='background:#225ea8;'></span>
+        <span style='background:#0c2c84;'></span>
+        <label>0 - 500</label>
+        <label>-1000</label>
+        <label>-1500</label>
+        <label>-2000</label>
+        <label>-2500+</label>
+    </div>
+    <hr>
+    <strong>Oil and Gas Well Depth</strong>    
+    <div class='legend clearfix' >
+        <span style='background:#9e9ac8;'></span>
+        <span style='background:#807dba;'></span>
+        <span style='background:#6a51a3;'></span>
+        <span style='background:#54278f;'></span>
+        <span style='background:#3f007d;'></span>
+        <label>0 - 500</label>
+        <label>-1000</label>
+        <label>-1500</label>
+        <label>-2000</label>
+        <label>-2500+</label>    
+    </div> 
+</div>    -->
 <script>
 
 L.mapbox.accessToken = 'pk.eyJ1IjoiZWxhZGFtMTkwMCIsImEiOiJjaW50MXFnZG4xMWZjdWttM2Nucmduc3E3In0.2v3TohBE2ysztKSUSjhHpg';
@@ -313,14 +343,13 @@ function waterMarker(d, breaks){
 function radiusCircle (){
     //create set radius around a well on click
     map.on('click', function(e){
-       
-       // og.eachLayer(function(layer) {
+       console.log(e.latlng)
+       console.log('here')
+       og.eachLayer(function(layer) {
            
-        var ogDistance = e.latlng.distanceTo(og.eachlayer.getLatLng())/1000;
+        var ogDistance = e.latlng.distanceTo(layer.getLatLng())/1000;
             
-            console.log(distance)
-            
-            if (distance > 1) {
+            if (ogDistance > 1) {
                     layer.setStyle({
                         stroke: false,
                         fill:false
@@ -332,11 +361,13 @@ function radiusCircle (){
                 });
             }
         
-        var wwDistance = e.latlng.distanceTo(ww.eachlayer.getLatLng())/1000;
+        });
+        
+        ww.eachLayer(function(layer){
             
-            console.log(distance)
+        var wwDistance = e.latlng.distanceTo(layer.getLatLng())/1000;
             
-            if (distance > 1) {
+            if (wwDistance > 1) {
                     layer.setStyle({
                         stroke: false,
                         fill:false
@@ -347,7 +378,7 @@ function radiusCircle (){
                     fill: true 
                 });
             }
-       // });
+        });    
     });
 }    
 </script>
