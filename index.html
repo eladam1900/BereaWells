@@ -135,33 +135,36 @@ var map = L.mapbox.map('map', 'mapbox.outdoors',{
     
 var ww, og; // globals for layers
     
-var customLayer = L.geoJson(null, {
-    fillOpacity: 0,
-    color: '#ada8a2',
-    weight: 3,
-    stroke: 1
-});
     
-var counties = omnivore.topojson('ky-counties-topo.json', null, customLayer).addTo(map);
-    
-omnivore.csv('BereaWells_John_Green_Law_Cleaned.csv')
-    .on('ready', function(ogWells){
-        omnivore.csv('WaterWells_latlong.csv') 
-            .on('ready', function(waterWells) {
-                drawMap(ogWells.target.toGeoJSON(), waterWells.target.toGeoJSON()) 
-                
-            })
+omnivore.topojson('ky-counties-topo.json')
+    .on('ready', function(countyborders){
+        omnivore.csv('BereaWells_John_Green_Law_Cleaned.csv')
+            .on('ready', function(ogWells){
+                omnivore.csv('WaterWells_latlong.csv') 
+                    .on('ready', function(waterWells) {
+                        drawMap(ogWells.target.toGeoJSON(), waterWells.target.toGeoJSON(), countyborders.target.toGeoJSON()) 
 
-            .on('error', function(waterWells){
-                console.log(waterWells.error[0].message);
-            })
-}
-    )
-    .on('error', function(ogWells){
-        console.log(ogWells.error[0].message);
-    });
+                    })
+
+                    .on('error', function(waterWells){
+                        console.log(waterWells.error[0].message);
+                    })
+        }
+            )
+            .on('error', function(ogWells){
+                console.log(ogWells.error[0].message);
+            });
+});
+       
+function drawMap(ogWells, waterWells, countyBorders) {
     
-function drawMap(ogWells, waterWells) {
+    L.geoJson(countyBorders, {
+        fillOpacity: 0,
+        color: '#ada8a2',
+        weight: 3,
+        stroke: 1
+    }).addTo(map);
+    
     
     var ogBreaks = getBreaks(ogWells);
     var wwBreaks = getBreaks(waterWells);
