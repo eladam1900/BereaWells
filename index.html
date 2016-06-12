@@ -18,7 +18,7 @@
       top:100px; 
       bottom:5px; 
       left:5px; 
-      width:70%; 
+      width:60%; 
       border: solid 1px black; 
     }
     h1{
@@ -31,26 +31,24 @@
     }
     #sidepanel{
         position: absolute;
-        right: 5px;
+        font-family: sans-serif;
+        overflow-y: auto;
+        right: 30px;
         top:100px;
-        width:29%;
-        height: 50%;
+        width:35%;
+        height: 85%;
     }
     #sidepanel p{
-        font-family: sans-serif;
-        padding: 5px;
-        position: absolute;
-        left: 2px;
-        right: 15px;
-        text-indent: 40px;
+        padding-right: 5px;
+        margin-top: -2px;
     }
     #legend{
         position: absolute;
         border: solid 1px black;
         background-color: beige;
         padding: 7px;
-        left: 7px;
-        bottom: 7px;
+        left: 15px;
+        bottom: 15px;
         font-family: sans-serif;
     }
     #legnd label,
@@ -63,22 +61,47 @@
       font-size:9px;
       color:#808080;
       }
-    .popup{
-      color:'black';
-      font-family: sans-serif;
-      font-size:12px;
-      line-height:18px;
-        text-transform: lowercase;
+    #link{
+       color:cadetblue;
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: none;
     }
-    .popup b{
-        font-size: 14px;
+    #content{
+        color:darkblue;
+        font-size: 12px;
+        line-height: 16px;
+
+    }
+    #content b{
+        font-size:12px;
     }
 </style>
 </head>
 <body>
 <h1>Berea Wells and Surrounding Analized Water Wells</h1>
-<div class='popup' id='map'>
-    <div id="legend">
+<div id='map'></div>
+<div id="sidepanel">
+<p>Over the past several years there has been a drilling boom in Northeastern Kentucky. Most of these wells have been drilled into the Berea Sandstone which produces oil and gas. Nationally there has also been a rise in concerns over the drilling practice known as fracking, and it's effect on the environment. More specifically the public has been concerned about induced seismicity (earthquakes caused by human events) and groundwater contamination.<br><br>
+The Kentucky Geological Survey is currently in various stages of research studying the Berea at direct and indirect levels. These studies are being performed by staff in the Energy and Minerals Section and the Water Section, but their findings will take up to a year or more to be published. In the meantime here is a map designed to give users access to the various well documents and analysis reports available for both the water and the oil and gas wells.<br><br>
+<b>A few facts:</b><br><br>    
+1. Over 300 wells have been completed in the Berea in Greenup (~39 oil wells), Lawrence (~110 oil wells, ~85 gas wells, ~10 oil and gas wells), and Johnson (~10 oil wells, ~35 gas wells) Counties.<br><br>
+2. The oil wells accounted for about 58% of oil production in Kentucky in 2015. Per well production ranges from 100s to 1,000s barrels per month.<br><br>
+3. Measured vertical depths range from about 1,000 to 2,000 ft.<br><br>
+4. The wells are fracked over multiple stages using 1,000s of barrels of fluid (1 barrel = 42 gallons) and 100,000s lbs. of sand. Note that the volumes of fluids and sand used in the Berea completions is less than in other unconventional plays, such as the Marcellus, Barnett, or Bakken.<br><br>
+5. The current Berea Groundwater project is using a 1,000 meter criteria for it's testing. <a id='link' href='KWRRI_2016_Berea_Rogersville_Baseline.pdf' target=_blank>A review of the project</a> <br><br>
+6. Kentucky passed new oil and gas well regulations in 2015 that, among many other things, require operators to test water quality of fresh groundwater wells within 1,000 ft of a high-volume hydraulic fracturing well. <a id='link' href='http://www.kyrc.org/webnewspro/142446477333045.shtml' target="_blank">Summary of Kentucky House Bill 386</a><br><br>
+7. The data set used here had the following criteria:<br>
+        <ul>
+            <li>A complete location</li>
+            <li>A total depth</li>
+            <li>Well must be active</li>
+            <li>Water wells must have an analysis report available</li>
+        </ul>
+    This is not the same criteria required by the previously mentioned research projects and did alter the overall number of wells displayed.
+ </p></div>
+    
+<div id="legend">
     <strong>Water Well Depth</strong>
     <div class='legend clearfix'>
         <span style='background:#7fcdbb;'></span>
@@ -106,52 +129,7 @@
         <label>-2000</label>
         <label>-2500+</label>    
     </div> 
-</div></div>
-    <div id="sidepanel">
-        <p>Over the past several years there has been a drilling boom in Northeastern Kentucky. Most of these wells have been drilled into the Berea Sandstone which produces oil and gas. 
-Nationally there has also been a rise in concerns over the drilling practice known as fracking, and it's effects on the environment. More specifically the public has been concerned 
-with induced seismicity (earthquakes caused by human events) and groundwater contamination.<br>
-<br>
-The Kentucky Geological Survey is currently in various stages of research studying the Berea at direct and indirect levels. These studies are being performed by staff in the Energy and Minerals Section and the Water Section, but 
-their findings will take up to a year or more to be published, but in the meantime here is a map designed to give users access to the various well documents and analysis reports for both the water and the oil and gas wells.
-<br>
-<br>
-1. Over 100 horizontal wells have been completed as oil wells in the Berea in Greenup (~39), Carter (1), Lawrence (~71), Johnson (~10), and Martin (1) Counties.
-2. These wells accounted for about 58% of oil production in Kentucky in 2015. Per well production ranges from 100s to 1,000s barrels per month.
-3. Measured vertical depths range from about 1,000 to 2,000 ft.
-4. The wells are fracked over multiple stages using 1,000s of barrels of fluid (1 barrel= 42 gallons) and 100,000s lbs. of sand. Note that the volumes of fluids and sand used in the Berea completions is less than in other unconventional plays, such as the Marcellus, Barnett, or Bakken.
-
-<br><br>This map is designed to give users access to the various well documents and analysis reports 
-for both the water and the oil and gas wells.</p></div>
-<!--<div id="legend">
-    <strong>Water Well Depth</strong>
-    <div class='legend clearfix'>
-        <span style='background:#7fcdbb;'></span>
-        <span style='background:#41b6c4;'></span>
-        <span style='background:#1d91c0;'></span>
-        <span style='background:#225ea8;'></span>
-        <span style='background:#0c2c84;'></span>
-        <label>0 - 500</label>
-        <label>-1000</label>
-        <label>-1500</label>
-        <label>-2000</label>
-        <label>-2500+</label>
-    </div>
-    <hr>
-    <strong>Oil and Gas Well Depth</strong>    
-    <div class='legend clearfix' >
-        <span style='background:#9e9ac8;'></span>
-        <span style='background:#807dba;'></span>
-        <span style='background:#6a51a3;'></span>
-        <span style='background:#54278f;'></span>
-        <span style='background:#3f007d;'></span>
-        <label>0 - 500</label>
-        <label>-1000</label>
-        <label>-1500</label>
-        <label>-2000</label>
-        <label>-2500+</label>    
-    </div> 
-</div>    -->
+</div>    
 <script>
 
 L.mapbox.accessToken = 'pk.eyJ1IjoiZWxhZGFtMTkwMCIsImEiOiJjaW50MXFnZG4xMWZjdWttM2Nucmduc3E3In0.2v3TohBE2ysztKSUSjhHpg';
@@ -203,28 +181,28 @@ function drawMap(ogWells, waterWells, countyBorders) {
        
     pointToLayer: function(feature, layer){
             return L.circleMarker(layer, {
-                color: '#d3d3d3',  
+                color: 'white',  
                 fillColor: waterMarker(feature.properties.total_depth, wwBreaks),
                 stroke: 0.5,
                 opacity: 1,
                 fillOpacity: 1,
-                radius: 4
+                radius: 5
             });
         }, // end pointToLayer
         
     onEachFeature: function(feature, layer){
         
-        var content  = "<b>"+"AKGWA Number: "+"</b>"+feature.properties.AKGWA_NUMBER+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.County+"<br>"+"<b>"+"Primary Use: "+"</b>"+feature.properties.Primary_Use+"<br>"+"<b>"+"Construction Date: "+"</b>"+feature.properties.Construction_Date+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.Surface_Elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"  
+        var content  = "<p id='content'><b>"+"AKGWA Number: "+"</b>"+feature.properties.AKGWA_NUMBER+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.County+"<br>"+"<b>"+"Primary Use: "+"</b>"+feature.properties.Primary_Use+"<br>"+"<b>"+"Construction Date: "+"</b>"+feature.properties.Construction_Date+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.Surface_Elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br></p>"  
         
-        content += "<div><a href='http://kgs.uky.edu/kgsweb/DataSearching/Water/wellinfo.asp?id="+feature.properties.AKGWA_NUMBER+"' target='_blank'><u>Well Documents</u></a></div></div>"
+        content += "<div><a href='http://kgs.uky.edu/kgsweb/DataSearching/Water/wellinfo.asp?id="+feature.properties.AKGWA_NUMBER+"' target='_blank'><u id='link'>Well Documents</u></a></div>"
         
-        layer.on('mouseover mousemove', function(e){
-    var popup = new L.popup({ offset: new L.Point(0,-10), closeButton: true, autoPan: false })
+   layer.on('click', function(e){
+            
+    var popup = new L.popup({ offset: new L.Point(0,-10), closeButton: true, autoPan: true })
       .setContent(content)
       .setLatLng(e.latlng)
       .openOn(map);
   });
-  layer.on('mouseout', function(e){ map.closePopup() });
         
     }
 }).addTo(map);    
@@ -233,51 +211,35 @@ function drawMap(ogWells, waterWells, countyBorders) {
       
     pointToLayer: function(feature, layer){
         return L.circleMarker(layer,{
-            color: '#d3d3d3', 
+            color: '#e1dede', 
             fillColor: ogMarker(feature.properties.total_depth, ogBreaks),
             stroke: 0.5,
             opacity: 1,
             fillOpacity: 1,
-            radius: 4
+            radius: 5
         });    
         
     },
     onEachFeature: function(feature, layer){
         
-        var content  = "<b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"+"<b>"+"Completion Date: "+"</b>"+feature.properties.date_completed+"<br>"+"<b>"+"Well Type: "+"</b>"+feature.properties.original_result+"<br>"+"<b>"+"Deepest Producing Formation: "+"</b>"+feature.properties.deepest_pay+"<br>"       
+        var content  = "<p id='content'><b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"+"<b>"+"Completion Date: "+"</b>"+feature.properties.date_completed+"<br>"+"<b>"+"Well Type: "+"</b>"+feature.properties.original_result+"<br>"+"<b>"+"Deepest Producing Formation: "+"</b>"+feature.properties.deepest_pay+"<br></p>"       
         
-        content += "<div><a href='http://kgs.uky.edu/kgsweb/datasearching/oilgas/ogresults.asp?recno="+feature.properties.record_number+"&areatype=recno' target='_blank'><u>Well Documents</u></a></div></div>"
+        content += "<div><a href='http://kgs.uky.edu/kgsweb/datasearching/oilgas/ogresults.asp?recno="+feature.properties.record_number+"&areatype=recno' target='_blank'><u id='link'>Well Documents</u></a></div>"
         
-        layer.on('mouseover mousemove', function(e){    
+        layer.on('click', function(e){    
             var popup = new L.popup({ offset: new L.Point(0,-10), closeButton: true, autoPan: false })
                   .setContent(content)
                   .setLatLng(e.latlng)
                   .openOn(map);
-              });
-        
-        layer.on('mouseout', function(e){ map.closePopup() });
-        
-  /*      layer.on('click', function(e){
-       
-        og.eachLayer(function(layer) {
-            var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
             
-            console.log(layer)
-            
-            if (distance > 1) {
-                    layer.setStyle({
-                        stroke: false,
-                        fill:false
-                    });
-            } else{
-                layer.setStyle({
-                    stroke: true,
-                    fill: true 
-                    });
-                  }
-            });
-        });*/
+            var info = L.control();
 
+            info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+              });
     } 
      
   }).addTo(map);
@@ -342,9 +304,8 @@ function waterMarker(d, breaks){
     
 function radiusCircle (){
     //create set radius around a well on click
-    map.on('click', function(e){
-       console.log(e.latlng)
-       console.log('here')
+    og.on('dblclick', function(e){
+       
        og.eachLayer(function(layer) {
            
         var ogDistance = e.latlng.distanceTo(layer.getLatLng())/1000;
