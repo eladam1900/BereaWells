@@ -170,7 +170,8 @@ function drawMap(ogWells, waterWells, countyBorders) {
         fillOpacity: 0,
         color: '#ada8a2',
         weight: 3,
-        stroke: 1
+        stroke: 1,
+        clickable: false
     }).addTo(map);
     
     
@@ -304,8 +305,8 @@ function waterMarker(d, breaks){
     
 function radiusCircle (){
     //create set radius around a well on click
-    og.on('dblclick', function(e){
-       
+    map.on('click', function(e){
+       console.log(e)
        og.eachLayer(function(layer) {
            
         var ogDistance = e.latlng.distanceTo(layer.getLatLng())/1000;
