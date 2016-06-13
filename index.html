@@ -144,13 +144,13 @@ var map = L.mapbox.map('map', 'mapbox.outdoors',{
 var ww, og; // globals for layers
     
     
-/*omnivore.topojson('ky-counties-topo.json')
-    .on('ready', function(countyborders){*/
+omnivore.topojson('ky-counties-topo.json')
+    .on('ready', function(countyborders){
         omnivore.csv('BereaWells_John_Green_Law_Cleaned.csv')
             .on('ready', function(ogWells){
                 omnivore.csv('WaterWells_latlong.csv') 
                     .on('ready', function(waterWells) {
-                        drawMap(ogWells.target.toGeoJSON(), waterWells.target.toGeoJSON()) 
+                        drawMap(ogWells.target.toGeoJSON(), waterWells.target.toGeoJSON(), countyborders.target.toGeoJSON()) 
 
                     })
 
@@ -162,17 +162,17 @@ var ww, og; // globals for layers
             .on('error', function(ogWells){
                 console.log(ogWells.error[0].message);
             });
-/*});*/
+});
        
-function drawMap(ogWells, waterWells) {
+function drawMap(ogWells, waterWells, countyborders) {
     
-  /*  L.geoJson(countyBorders, {
+    L.geoJson(countyborders, {
         fillOpacity: 0,
         color: '#ada8a2',
         weight: 3,
         stroke: 1,
         clickable: false
-    }).addTo(map);*/
+    }).addTo(map);
     
     
     var ogBreaks = getBreaks(ogWells);
@@ -228,7 +228,7 @@ function drawMap(ogWells, waterWells) {
         content += "<div><a href='http://kgs.uky.edu/kgsweb/datasearching/oilgas/ogresults.asp?recno="+feature.properties.record_number+"&areatype=recno' target='_blank'><u id='link'>Well Documents</u></a></div>"
         
         layer.on('click', function(e){    
-            var popup = new L.popup({ offset: new L.Point(0,-10), closeButton: true, autoPan: false })
+            var popup = new L.popup({ offset: new L.Point(0,-10), closeButton: true, autoPan: true })
                   .setContent(content)
                   .setLatLng(e.latlng)
                   .openOn(map);
@@ -306,7 +306,7 @@ function waterMarker(d, breaks){
 function radiusCircle (){
     //create set radius around a well on click
     console.log('and here')
-    map.on('dblclick', function(e){
+    map.on('click', function(e){
        console.log(e)
        og.eachLayer(function(layer) {
            
