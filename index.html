@@ -30,6 +30,11 @@
         color: mediumaquamarine;
         font-style: oblique;
     }
+    h2{
+        font-family: sans-serif;
+        color: darkslategrey;
+        font-style: oblique;
+    }
     #sidepanel{
         position: absolute;
         font-family: sans-serif;
@@ -198,7 +203,7 @@ function drawMap(ogWells, waterWells, countyborders) {
         
     onEachFeature: function(feature, layer){
         
-        var content  = "<p id='content'><b>"+"AKGWA Number: "+"</b>"+feature.properties.AKGWA_NUMBER+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.County+"<br>"+"<b>"+"Primary Use: "+"</b>"+feature.properties.Primary_Use+"<br>"+"<b>"+"Construction Date: "+"</b>"+feature.properties.Construction_Date+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.Surface_Elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br></p>"  
+        var content  = "<h2>Water Well</h2>"+"<p id='content'><b>"+"AKGWA Number: "+"</b>"+feature.properties.AKGWA_NUMBER+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.County+"<br>"+"<b>"+"Primary Use: "+"</b>"+feature.properties.Primary_Use+"<br>"+"<b>"+"Construction Date: "+"</b>"+feature.properties.Construction_Date+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.Surface_Elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br></p>"  
         
         content += "<div><a href='http://kgs.uky.edu/kgsweb/DataSearching/Water/wellinfo.asp?id="+feature.properties.AKGWA_NUMBER+"' target='_blank'><u id='link'>Well Documents</u></a></div>"
         
@@ -228,7 +233,7 @@ function drawMap(ogWells, waterWells, countyborders) {
     },
     onEachFeature: function(feature, layer){
         
-        var content  = "<p id='content'><b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"+"<b>"+"Completion Date: "+"</b>"+feature.properties.date_completed+"<br>"+"<b>"+"Well Type: "+"</b>"+feature.properties.original_result+"<br>"+"<b>"+"Deepest Producing Formation: "+"</b>"+feature.properties.deepest_pay+"<br></p>"       
+        var content  = "<h2>Oil and Gas Well</h2>"+"<p id='content'><b>"+"Record Number: "+"</b>"+feature.properties.record_number+"<br>"+"<b>"+"Permit Number: "+"</b>"+feature.properties.justified_permit+"<br>"+"<b>"+"County: "+"</b>"+feature.properties.county_name+"<br>"+"<b>"+"Elevation: "+"</b>"+feature.properties.well_elevation+ "<br>"+"<b>"+"Total Depth: "+"</b>"+feature.properties.total_depth+"<br>"+"<b>"+"Completion Date: "+"</b>"+feature.properties.date_completed+"<br>"+"<b>"+"Well Type: "+"</b>"+feature.properties.original_result+"<br>"+"<b>"+"Deepest Producing Formation: "+"</b>"+feature.properties.deepest_pay+"<br></p>"       
         
         content += "<div><a href='http://kgs.uky.edu/kgsweb/datasearching/oilgas/ogresults.asp?recno="+feature.properties.record_number+"&areatype=recno' target='_blank'><u id='link'>Well Documents</u></a></div>"
         
